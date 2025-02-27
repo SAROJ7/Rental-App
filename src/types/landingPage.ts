@@ -5,3 +5,9 @@ export interface IFeatureCard {
   linkText: string;
   linkHref: string;
 }
+
+export interface IDiscoverCard {
+  imageSrc: string;
+  title: string;
+  description: string;
+}
