@@ -4,7 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
+import { Authenticator } from "@aws-amplify/ui-react";
+import Auth from "@/app/(auth)/authProvider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
