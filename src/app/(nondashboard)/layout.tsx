@@ -1,9 +1,14 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
 import { NAVBAR_HEIGHT } from "@/lib";
+import { useGetAuth } from "@/queries/auth.query";
 import { LayoutProps } from "@/types";
 import React from "react";
 
 const Layout = ({ children }: LayoutProps) => {
+  const authUser = useGetAuth();
+
   return (
     <div className="h-full w-full">
       <Navbar />
