@@ -39,12 +39,6 @@ export const getAuthUser = async (): Promise<{
   }
 };
 
-/**
- * Fetches user details from the database or creates a new user if not found
- * @param user Cognito user object
- * @param userRole User role (manager or tenant)
- * @returns User information from database
- */
 async function fetchOrCreateUserDetails(
   user: any,
   userRole: UserRole
