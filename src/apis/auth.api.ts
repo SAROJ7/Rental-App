@@ -39,6 +39,7 @@ export const getAuthUser = async (): Promise<{
   }
 };
 
+//Utils Functions
 async function fetchOrCreateUserDetails(
   user: any,
   userRole: UserRole
