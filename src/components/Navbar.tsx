@@ -1,3 +1,5 @@
+"use client";
+
 import { NAVBAR_HEIGHT } from "@/lib";
 import Image from "next/image";
 import Link from "next/link";
@@ -76,7 +78,8 @@ const Navbar = () => {
                     : "/search"
                 )
               }
-              {...(authUser.data?.userRole.toLowerCase() === "manager" ? (
+            >
+              {authUser.data?.userRole.toLowerCase() === "manager" ? (
                 <>
                   <Plus className="h-4 w-4" />
                   <span className="hidden md:block ml-2">Add New Property</span>
@@ -88,8 +91,8 @@ const Navbar = () => {
                     Search Properties
                   </span>
                 </>
-              ))}
-            ></Button>
+              )}
+            </Button>
           )}
         </div>
         {!isDashboardPage && (
