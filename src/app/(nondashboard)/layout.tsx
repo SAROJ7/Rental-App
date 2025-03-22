@@ -15,13 +15,11 @@ const Layout = ({ children }: LayoutProps) => {
 
   useEffect(() => {
     if (authUser?.data) {
-      console.log({ authUser });
       const userRole = authUser.data.userRole.toLowerCase();
       if (
         (userRole === "manager" && pathname.startsWith("/search")) ||
         (userRole === "manager" && pathname === "/landing")
       ) {
-        console.log("object");
         router.push("/managers/properties", { scroll: false });
       } else {
         setIsLoading(false);
