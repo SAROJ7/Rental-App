@@ -6,7 +6,7 @@ import {
 import { zustandStore } from "./zustand.store";
 import { localStore } from "./local.store";
 
-const initialStore: GlobalState = {
+export const initialStore: GlobalState = {
   filters: {
     location: "Los Angeles",
     beds: "any",
