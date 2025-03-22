@@ -4,10 +4,10 @@ import { useGlobalStore } from "@/store/global.store";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { debounce } from "lodash";
-import { cleanParams, cn, formatPriceValue } from "@/lib";
+import { cleanParams, cn, formatPriceValue, PropertyTypeIcons } from "@/lib";
 import { FiltersState } from "@/types/globalState.type";
 import { Button } from "@/components/ui/button";
-import { Filter, Search } from "lucide-react";
+import { Filter, Grid, List, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -24,6 +24,7 @@ const FiltersBar = () => {
   const filters = useGlobalStore((state) => state.filters);
   const isFiltersFullOpen = useGlobalStore((state) => state.isFiltersFullOpen);
   const viewMode = useGlobalStore((state) => state.viewMode);
+  const setViewMode = useGlobalStore((state) => state.setViewMode);
   const setFilters = useGlobalStore((state) => state.setFilters);
   const toggleFiltersFullOpen = useGlobalStore(
     (state) => state.toggleFiltersFullOpen
@@ -149,6 +150,97 @@ const FiltersBar = () => {
               </SelectContent>
             </Select>
           </div>
+        </div>
+        {/* Beds and Baths */}
+        <div className="inline-flex items-center gap-1">
+          {/* Bed */}
+          <div className="inline-block">
+            <Select
+              value={filters.beds}
+              onValueChange={(value) => handleFilterChange("beds", value, null)}
+            >
+              <SelectTrigger className="w-26 rounded-xl border-primary-400">
+                <SelectValue placeholder="beds" />
+              </SelectTrigger>
+              <SelectContent className="bg-white p-1 border border-primary-400 rounded-md shadow-lg mt-1">
+                <SelectItem value="any">Any Beds</SelectItem>
+                <SelectItem value="1">1+ beds</SelectItem>
+                <SelectItem value="2">2+ beds</SelectItem>
+                <SelectItem value="3">3+ beds</SelectItem>
+                <SelectItem value="4">4+ beds</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Baths */}
+          <div className="inline-block">
+            <Select
+              value={filters.baths}
+              onValueChange={(value) =>
+                handleFilterChange("baths", value, null)
+              }
+            >
+              <SelectTrigger className="w-26 rounded-xl border-primary-400">
+                <SelectValue placeholder="baths" />
+              </SelectTrigger>
+              <SelectContent className="bg-white p-1 border border-primary-400 rounded-md shadow-lg mt-1">
+                <SelectItem value="any">Any Baths</SelectItem>
+                <SelectItem value="1">1+ baths</SelectItem>
+                <SelectItem value="2">2+ baths</SelectItem>
+                <SelectItem value="3">3+ baths</SelectItem>
+                <SelectItem value="4">4+ baths</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Select
+              value={filters.propertyType || "any"}
+              onValueChange={(value) =>
+                handleFilterChange("propertyType", value, null)
+              }
+            >
+              <SelectTrigger className="w-40 rounded-xl border-primary-400">
+                <SelectValue placeholder="Home Type" />
+              </SelectTrigger>
+              <SelectContent className="bg-white mt-1 border rounded-md p-1 shadow-lg">
+                <SelectItem value="any">Any Property Type</SelectItem>
+                {Object.entries(PropertyTypeIcons).map(([type, Icon]) => (
+                  <SelectItem key={type} value={type}>
+                    <div className="flex items-center">
+                      <Icon className="h-4 w-4 mr-2" />
+                      <span>{type}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+
+      {/* View Mode */}
+      <div className="flex justify-between items-center gap-4 p-2">
+        <div className="flex border rounded-xl">
+          <Button
+            variant="ghost"
+            className={cn(
+              "px-3 py-1 rounded-none rounded-l-xl hover:bg-primary-600 hover:text-primary-50",
+              viewMode === "list" ? "bg-primary-700 text-primary-50" : ""
+            )}
+            onClick={() => setViewMode("list")}
+          >
+            <List className="h-5 w-5" />
+          </Button>
+          <Button
+            variant="ghost"
+            className={cn(
+              "px-3 py-1 rounded-none rounded-r-xl hover:bg-primary-600 hover:text-primary-50",
+              viewMode === "grid" ? "bg-primary-700 text-primary-50" : ""
+            )}
+            onClick={() => setViewMode("grid")}
+          >
+            <Grid className="h-5 w-5" />
+          </Button>
         </div>
       </div>
     </div>
