@@ -6,4 +6,7 @@ export const TAGS = {
 
   //Managers
   UPDATE_Manager_SETTINGS: "update-manager-settings",
+
+  //Property
+  GET_PROPERTIES: "get_properties",
 };
