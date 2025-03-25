@@ -14,3 +14,30 @@ export const updateTenantSettings = async ({
   );
   return response.data;
 };
+
+export const addFavoriteProperty = async ({
+  cognitoId,
+  propertyId,
+}: {
+  cognitoId: string;
+  propertyId: number;
+}): Tenant => {
+  const response = await axiosInstance.patch(
+    `/tenants/${cognitoId}/favorites/${propertyId}`
+  );
+  return response.data;
+};
+
+export const removeFavoriteProperty = async ({
+  cognitoId,
+  propertyId,
+}: {
+  cognitoId: string;
+  propertyId: number;
+}): Tenant => {
+  const response = await axiosInstance.delete(
+    `/tenants/${cognitoId}/favorites/${propertyId}`
+  );
+
+  return response.data;
+};
