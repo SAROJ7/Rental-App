@@ -66,6 +66,32 @@ const FiltersFull = () => {
     }));
   };
 
+  const handleLocationSearch = async () => {
+    try {
+      const response = await fetch(
+        `https://api.radar.io/v1/geocode/forward?query=${encodeURIComponent(
+          localFilters.location
+        )}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `${process.env.NEXT_PUBLIC_RADAR_API_KEY}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (data?.addresses && data?.addresses.length > 0) {
+        const [lng, lat] = data.addresses[0].geometry.coordinates;
+        setLocalFilters((prev) => ({
+          ...prev,
+          coordinates: [lng, lat],
+        }));
+      }
+    } catch (error) {
+      console.error(`Error Searching Location: ${error}`);
+    }
+  };
+
   if (!isFiltersFullOpen) return null;
 
   return (
@@ -76,8 +102,8 @@ const FiltersFull = () => {
           <h4 className="font-bold mb-2">Location</h4>
           <div className="flex items-center">
             <Input
-              placeholder="Enter Location"
-              value={filters.location}
+              placeholder="Enter location"
+              value={localFilters.location}
               onChange={(e) =>
                 setLocalFilters((prev) => ({
                   ...prev,
@@ -86,7 +112,10 @@ const FiltersFull = () => {
               }
               className="rounded-l-xl rounded-r-none border-r-0"
             />
-            <Button className="rounded-r-xl rounded-l-none border-black shadow-none border hover:bg-primary-700 hover:text-primary-50">
+            <Button
+              onClick={handleLocationSearch}
+              className="rounded-r-xl rounded-l-none border-black shadow-none border hover:bg-primary-700 hover:text-primary-50"
+            >
               <Search className="w-4 h-4" />
             </Button>
           </div>
