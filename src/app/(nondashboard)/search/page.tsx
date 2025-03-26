@@ -35,13 +35,15 @@ const SearchPage = () => {
 
   return (
     <div
-      className="w-full mx-auto px-5 flex flex-col"
+      className="w-full mx-auto px-5 flex flex-col relative"
       style={{
         height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
       }}
     >
-      <FiltersBar />
-      <div className="flex justify-between flex-1 overflow-hidden gap-3 mb-5">
+      <div className="relative z-10">
+        <FiltersBar />
+      </div>
+      <div className="flex justify-between flex-1 overflow-hidden gap-3 mb-5 relative">
         <div
           className={`h-full overflow-auto transition-all duration-300 ease-in-out ${
             isFiltersFullOpen
@@ -52,7 +54,7 @@ const SearchPage = () => {
           <FiltersFull />
         </div>
         <Map />
-        <div className="basis-4/12 overflow-y-auto">
+        <div className="basis-4/12 overflow-y-auto relative z-0">
           <Listings />
         </div>
       </div>

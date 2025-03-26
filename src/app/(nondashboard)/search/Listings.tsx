@@ -1,4 +1,5 @@
 import Card from "@/components/Card";
+import CardCompact from "@/components/CardCompact";
 import { useGetAuth } from "@/queries/auth.query";
 import { useGetPropertiesQuery } from "@/queries/property.query";
 import {
@@ -72,7 +73,18 @@ const Listings = () => {
                 propertyLink={`/search/${property.id}`}
               />
             ) : (
-              <React.Fragment key={property.id}>Another Card</React.Fragment>
+              <CardCompact
+                key={property.id}
+                property={property}
+                isFavorite={
+                  authUser?.data?.userInfo?.favorites?.some(
+                    (fav: Property) => fav.id === property.id
+                  ) || false
+                }
+                onFavoriteToggle={() => handleFavoriteToggle(property.id)}
+                showFavoriteButton={!!authUser?.data}
+                propertyLink={`/search/${property.id}`}
+              />
             )
           )}
         </div>

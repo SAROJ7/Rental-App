@@ -1,22 +1,16 @@
 "use client";
 
-import { useGlobalStore } from "@/store/global.store";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { debounce } from "lodash";
-import { cleanParams, cn, formatPriceValue, PropertyTypeIcons } from "@/lib";
-import { FiltersState } from "@/types/globalState.type";
 import { Button } from "@/components/ui/button";
-import { Filter, Grid, List, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-} from "@/components/ui/select";
+import { Select, SelectItem, SelectTrigger } from "@/components/ui/select";
+import { cleanParams, cn, formatPriceValue, PropertyTypeIcons } from "@/lib";
+import { useGlobalStore } from "@/store/global.store";
+import { FiltersState } from "@/types/globalState.type";
 import { SelectContent, SelectValue } from "@radix-ui/react-select";
+import { debounce } from "lodash";
+import { Filter, Grid, List, Search } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 const FiltersBar = () => {
   const router = useRouter();
@@ -68,6 +62,34 @@ const FiltersBar = () => {
     updateURL(newFilters);
   };
 
+  const handleLocationSearch = async () => {
+    try {
+      const response = await fetch(
+        `https://api.radar.io/v1/geocode/forward?query=${encodeURIComponent(
+          searchInput
+        )}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `${process.env.NEXT_PUBLIC_RADAR_API_KEY}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (data?.addresses && data?.addresses.length > 0) {
+        const [lng, lat] = data.addresses[0].geometry.coordinates;
+        setFilters({
+          location: searchInput,
+          coordinates: [lng, lat],
+        });
+        handleFilterChange("location", searchInput, null);
+        handleFilterChange("coordinates", [lng, lat], null);
+      }
+    } catch (error) {
+      console.error(`Error Searching Location: ${error}`);
+    }
+  };
+
   return (
     <div className="flex justify-between items-center w-full py-5">
       {/* Filters */}
@@ -95,6 +117,7 @@ const FiltersBar = () => {
             className="w-40 rounded-l-xl rounded-r-none border-primary-400 border-r-0"
           />
           <Button
+            onClick={handleLocationSearch}
             className={`rounded-r-xl rounded-l-none  border-primary-400 border shadow-none hover:bg-primary-700 hover:text-primary-50`}
           >
             <Search className="w-4 h-4" />
@@ -199,7 +222,7 @@ const FiltersBar = () => {
                 handleFilterChange("propertyType", value, null)
               }
             >
-              <SelectTrigger className="w-40 rounded-xl border-primary-400">
+              <SelectTrigger className="w-42 rounded-xl border-primary-400">
                 <SelectValue placeholder="Home Type" />
               </SelectTrigger>
               <SelectContent className="bg-white mt-1 border rounded-md p-1 shadow-lg">

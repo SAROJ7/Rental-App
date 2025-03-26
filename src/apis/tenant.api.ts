@@ -41,3 +41,8 @@ export const removeFavoriteProperty = async ({
 
   return response.data;
 };
+
+export const getTenant = async (cognitoId: string): Tenant => {
+  const response = await axiosInstance.get(`/tenants/${cognitoId}`);
+  return response.data;
+};

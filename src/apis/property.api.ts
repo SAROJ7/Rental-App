@@ -13,7 +13,7 @@ export const getProperties = async (
   const params = cleanParams({
     location: filters.location,
     priceMin: filters.priceRange?.[0],
-    priceMax: filters.priceRange?.[0],
+    priceMax: filters.priceRange?.[1],
     beds: filters.beds,
     baths: filters.baths,
     propertyType: filters.propertyType,
@@ -25,6 +25,7 @@ export const getProperties = async (
     latitude: filters.coordinates?.[1],
     longitude: filters.coordinates?.[0],
   });
+
   const response = await axiosInstance.get("property", { params });
   return response.data;
 };

@@ -1,10 +1,12 @@
 import {
   addFavoriteProperty,
+  getTenant,
   removeFavoriteProperty,
   updateTenantSettings,
 } from "@/apis";
 import { TAGS } from "@/constants";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Tenant } from "@/types/prismaTypes";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useUpdateTenantSettingsMutation = () => {
@@ -28,9 +30,14 @@ export const useAddFavoritePropertyMutation = () => {
     mutationFn: addFavoriteProperty,
     onSuccess: () => {
       toast.success("Added  To Favorites");
-      queryClient.invalidateQueries({
-        queryKey: [TAGS.GET_PROPERTIES, TAGS.GET_AUTH_USER],
-      });
+      Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: [TAGS.GET_PROPERTIES],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [TAGS.GET_AUTH_USER],
+        }),
+      ]);
     },
   });
 };
@@ -42,9 +49,25 @@ export const useRemoveFavoritePropertyMutation = () => {
     mutationFn: removeFavoriteProperty,
     onSuccess: () => {
       toast.success(`Removed From Favorites`);
-      queryClient.invalidateQueries({
-        queryKey: [TAGS.GET_PROPERTIES, TAGS.GET_AUTH_USER],
-      });
+      Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: [TAGS.GET_PROPERTIES],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [TAGS.GET_AUTH_USER],
+        }),
+      ]);
+    },
+  });
+};
+
+export const useGetTenantQuery = (cognitoId: string) => {
+  return useQuery<Tenant, Error>({
+    queryKey: [TAGS.GET_TENANT],
+    queryFn: () => getTenant(cognitoId),
+    onError: (error) => {
+      console.error(error);
+      toast.error(`Failed to fetch the tenant`);
     },
   });
 };
