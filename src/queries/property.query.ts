@@ -1,4 +1,8 @@
-import { getProperties, GetPropertiesParams } from "@/apis/property.api";
+import {
+  getProperties,
+  GetPropertiesParams,
+  getProperty,
+} from "@/apis/property.api";
 import { TAGS } from "@/constants";
 import { Property } from "@/types/prismaTypes";
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
@@ -17,6 +21,16 @@ export const useGetPropertiesQuery = (
       if (options?.onError) {
         options.onError(error);
       }
+    },
+  });
+};
+
+export const useGetPropertyQuery = (propertyId: number) => {
+  return useQuery<Property, Error>({
+    queryKey: [TAGS.GET_PROPERTY],
+    queryFn: () => getProperty(propertyId),
+    onError: () => {
+      toast.error(`Failed to Fetch Property Details.`);
     },
   });
 };
