@@ -8,6 +8,7 @@ import { LayoutProps } from "@/types";
 import React, { useEffect, useState } from "react";
 import { useGetAuth } from "@/queries/auth.query";
 import { usePathname, useRouter } from "next/navigation";
+import Loading from "@/components/Loading";
 
 const DashboardLayout = ({ children }: LayoutProps) => {
   const { data: authUser, isLoading: authLoading } = useGetAuth();
@@ -34,7 +35,7 @@ const DashboardLayout = ({ children }: LayoutProps) => {
     }
   }, [authUser?.data, router, pathname]);
 
-  if (authLoading || isLoading) return <>Loading...</>;
+  if (authLoading || isLoading) return <Loading />;
 
   if (!authUser?.data?.userRole) return null;
 

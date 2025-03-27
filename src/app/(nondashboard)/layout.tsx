@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/components/Loading";
 import Navbar from "@/components/Navbar";
 import { NAVBAR_HEIGHT } from "@/lib";
 import { useGetAuth } from "@/queries/auth.query";
@@ -27,7 +28,8 @@ const Layout = ({ children }: LayoutProps) => {
     }
   }, [authUser?.data, router, pathname]);
 
-  if (authLoading || isLoading) return <>Loading...</>;
+  if (authLoading || isLoading) return <Loading />;
+
   return (
     <div className="h-full w-full">
       <Navbar />

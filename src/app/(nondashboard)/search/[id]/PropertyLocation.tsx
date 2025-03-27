@@ -7,6 +7,7 @@ import React, { useEffect, useRef } from "react";
 import Radar from "radar-sdk-js";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Compass, MapPin } from "lucide-react";
+import Loading from "@/components/Loading";
 
 const PropertyLocation = ({ propertyId }: PropertyLocationProps) => {
   const {
@@ -46,8 +47,9 @@ const PropertyLocation = ({ propertyId }: PropertyLocationProps) => {
     return () => map.remove();
   }, [isLoading, isError, property]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError || !property) return <div>Property Not Found</div>;
+
   return (
     <div className="py-16">
       <h3 className="text-xl font-semibold text-primary-800 dark:text-primary-100">
