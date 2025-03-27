@@ -23,3 +23,23 @@ export interface CardProps {
   showFavoriteButton?: boolean;
   propertyLink?: string;
 }
+
+export interface ImagePreviewsProps {
+  images: string[];
+}
+
+export interface PropertyOverviewProps {
+  propertyId: number;
+}
+
+export interface PropertyDetailsProps {
+  propertyId: number;
+}
+
+export interface PropertyLocationProps {
+  propertyId: number;
+}
+
+export interface ContactWidgetProps {
+  onOpenModal: () => void;
+}

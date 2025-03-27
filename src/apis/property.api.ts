@@ -29,3 +29,8 @@ export const getProperties = async (
   const response = await axiosInstance.get("property", { params });
   return response.data;
 };
+
+export const getProperty = async (propertyId: number): Property => {
+  const response = await axiosInstance.get(`/property/${propertyId}`);
+  return response.data;
+};

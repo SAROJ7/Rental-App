@@ -12,4 +12,5 @@ export const TAGS = {
 
   //Property
   GET_PROPERTIES: "get-properties",
+  GET_PROPERTY: "get-property",
 };
