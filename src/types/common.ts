@@ -43,3 +43,8 @@ export interface PropertyLocationProps {
 export interface ContactWidgetProps {
   onOpenModal: () => void;
 }
+
+export interface HeaderProps {
+  title: string;
+  subtitle: string;
+}
