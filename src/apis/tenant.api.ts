@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/providers/axios-provider";
-import { Tenant } from "@/types/prismaTypes";
+import { Property, Tenant } from "@/types/prismaTypes";
 
 export const updateTenantSettings = async ({
   cognitoId,
@@ -44,5 +44,12 @@ export const removeFavoriteProperty = async ({
 
 export const getTenant = async (cognitoId: string): Tenant => {
   const response = await axiosInstance.get(`/tenants/${cognitoId}`);
+  return response.data;
+};
+
+export const getCurrentResidences = async (
+  cognitoId: string
+): Promise<Property[]> => {
+  const response = await axiosInstance.get(`/tenants/${cognitoId}/properties`);
   return response.data;
 };
