@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import {
   useGetPropertiesQuery,
   useGetPropertyQuery,
@@ -14,7 +15,7 @@ const PropertyOverview = ({ propertyId }: PropertyOverviewProps) => {
     isLoading,
   } = useGetPropertyQuery(propertyId);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError || !property) return <div>Property Not Found</div>;
 
   return (

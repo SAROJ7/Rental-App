@@ -6,6 +6,7 @@ export const TAGS = {
   ADD_FAVORITE_PROPERTY: "add-favorite-property",
   REMOVE_FAVORITE_PROPERTY: "remove-favorite-property",
   GET_TENANT: "get-tenant",
+  GET_CURRENT_RESIDENCES: "get-current-residences",
 
   //Managers
   UPDATE_Manager_SETTINGS: "update-manager-settings",
@@ -13,4 +14,8 @@ export const TAGS = {
   //Property
   GET_PROPERTIES: "get-properties",
   GET_PROPERTY: "get-property",
+
+  //Lease
+  GET_LEASES: "get-leases",
+  GET_PROPERTY_LEASE: "get-property-lease",
 };

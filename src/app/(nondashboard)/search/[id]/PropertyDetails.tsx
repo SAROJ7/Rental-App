@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   AmenityEnum,
@@ -18,9 +19,9 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
     isError,
   } = useGetPropertyQuery(propertyId);
 
-  if (isLoading) return <div>Loading...</div>;
-
+  if (isLoading) return <Loading />;
   if (isError || !property) return <div>Property Not Found</div>;
+
   return (
     <div className="mb-6">
       {/* Amenities */}

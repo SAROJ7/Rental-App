@@ -1,5 +1,6 @@
 import Card from "@/components/Card";
 import CardCompact from "@/components/CardCompact";
+import Loading from "@/components/Loading";
 import { useGetAuth } from "@/queries/auth.query";
 import { useGetPropertiesQuery } from "@/queries/property.query";
 import {
@@ -45,7 +46,7 @@ const Listings = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError || !properties) return <div>Failed to fetch properties</div>;
 
   return (

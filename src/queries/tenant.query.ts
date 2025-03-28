@@ -1,12 +1,18 @@
 import {
   addFavoriteProperty,
+  getCurrentResidences,
   getTenant,
   removeFavoriteProperty,
   updateTenantSettings,
 } from "@/apis";
 import { TAGS } from "@/constants";
-import { Tenant } from "@/types/prismaTypes";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Property, Tenant } from "@/types/prismaTypes";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useUpdateTenantSettingsMutation = () => {
@@ -61,13 +67,31 @@ export const useRemoveFavoritePropertyMutation = () => {
   });
 };
 
-export const useGetTenantQuery = (cognitoId: string) => {
+export const useGetTenantQuery = (
+  cognitoId: string,
+  options?: { enabled: boolean }
+) => {
   return useQuery<Tenant, Error>({
     queryKey: [TAGS.GET_TENANT],
     queryFn: () => getTenant(cognitoId),
+    ...options,
     onError: (error) => {
       console.error(error);
       toast.error(`Failed to fetch the tenant`);
+    },
+  });
+};
+
+export const useGetCurrentResidencesQuery = (
+  cognitoId: string,
+  options?: UseQueryOptions<Property[], Error>
+) => {
+  return useQuery<Property[], Error>({
+    queryKey: [TAGS.GET_CURRENT_RESIDENCES],
+    queryFn: () => getCurrentResidences(cognitoId),
+    ...options,
+    onError: () => {
+      toast.error(`Failed to Fetch current residences of tenant`);
     },
   });
 };
