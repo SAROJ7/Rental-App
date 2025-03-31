@@ -21,3 +21,8 @@ export const getManagerProperties = async (
   const response = await axiosInstance.get(`/managers/${cognitoId}/properties`);
   return response.data;
 };
+
+export const createProperty = async (formData: FormData): Property => {
+  const response = await axiosInstance.post("/property", formData);
+  return response.data;
+};

@@ -1,6 +1,10 @@
 "use client";
 
-import { getManagerProperties, updateManagerSettings } from "@/apis";
+import {
+  createProperty,
+  getManagerProperties,
+  updateManagerSettings,
+} from "@/apis";
 import { TAGS } from "@/constants";
 import { Property } from "@/types/prismaTypes";
 import {
@@ -35,6 +39,23 @@ export const useGetManagerPropertiesQuery = (
     ...options,
     onError: () => {
       toast.error(`Failed to fail manager properties`);
+    },
+  });
+};
+
+export const useCreatePropertyMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: [TAGS.CREATE_PROPERTY],
+    mutationFn: createProperty,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [TAGS.GET_MANAGER_PROPERTIES],
+      });
+      toast.success(`Property created successfully`);
+    },
+    onError: (error) => {
+      toast.error("Failed to create property.");
     },
   });
 };
