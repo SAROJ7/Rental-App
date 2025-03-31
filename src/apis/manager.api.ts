@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/providers/axios-provider";
-import { Manager } from "@/types/prismaTypes";
+import { Manager, Property } from "@/types/prismaTypes";
 
 export const updateManagerSettings = async ({
   cognitoId,
@@ -12,5 +12,12 @@ export const updateManagerSettings = async ({
     `/managers/${cognitoId}`,
     updateManager
   );
+  return response.data;
+};
+
+export const getManagerProperties = async (
+  cognitoId: string
+): Promise<Property[]> => {
+  const response = await axiosInstance.get(`/managers/${cognitoId}/properties`);
   return response.data;
 };

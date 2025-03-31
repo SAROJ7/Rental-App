@@ -10,12 +10,14 @@ export const TAGS = {
 
   //Managers
   UPDATE_Manager_SETTINGS: "update-manager-settings",
+  GET_MANAGER_PROPERTIES: "get-manager-properties",
 
   //Property
   GET_PROPERTIES: "get-properties",
   GET_PROPERTY: "get-property",
+  GET_PROPERTY_LEASE: "get-property-lease",
 
   //Lease
   GET_LEASES: "get-leases",
-  GET_PROPERTY_LEASE: "get-property-lease",
+  GET_LEASE_PAYMENT: "get-lease-payment",
 };

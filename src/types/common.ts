@@ -1,5 +1,5 @@
 import { SettingsFormData } from "@/lib";
-import { Property } from "./prismaTypes";
+import { Lease, Payment, Property } from "./prismaTypes";
 
 export interface LayoutProps
   extends Readonly<{
@@ -47,4 +47,15 @@ export interface ContactWidgetProps {
 export interface HeaderProps {
   title: string;
   subtitle: string;
+}
+
+export interface ResidenceCardProps {
+  property: Property;
+  currentLease: Lease;
+}
+
+export interface PaymentMethodProps {}
+
+export interface BillingHistoryProps {
+  payments: Payment[];
 }
