@@ -5,6 +5,9 @@ import { useGetAuth } from "@/queries/auth.query";
 import { useGetPropertyQuery } from "@/queries/property.query";
 import { useParams } from "next/navigation";
 import React from "react";
+import ResidenceCard from "./ResidenceCard";
+import PaymentMethod from "./PaymentMethod";
+import BillingHistory from "./BillingHistory";
 
 const Residence = () => {
   const { id } = useParams();
@@ -26,8 +29,25 @@ const Residence = () => {
   console.log({ property, leases, payments });
 
   if (propertyLoading || leasesLoading || paymentLoading) return <Loading />;
+  if (!property || propertyError) return <div>Error Loading Property</div>;
 
-  return <div>Residence</div>;
+  const currentLease = leases?.find(
+    (lease) => lease.propertyId === property.id
+  );
+
+  return (
+    <div className="dashboard-container">
+      <div className="w-full mx-auto">
+        <div className="md:flex gap-10">
+          {currentLease && (
+            <ResidenceCard property={property} currentLease={currentLease} />
+          )}
+          <PaymentMethod />
+        </div>
+        <BillingHistory payments={payments || []} />
+      </div>
+    </div>
+  );
 };
 
 export default Residence;
