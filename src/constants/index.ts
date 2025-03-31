@@ -13,6 +13,7 @@ export const TAGS = {
   GET_MANAGER_PROPERTIES: "get-manager-properties",
 
   //Property
+  CREATE_PROPERTY: "create-property",
   GET_PROPERTIES: "get-properties",
   GET_PROPERTY: "get-property",
   GET_PROPERTY_LEASE: "get-property-lease",

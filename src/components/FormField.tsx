@@ -21,10 +21,16 @@ import {
   FormMessage,
 } from "./ui/form";
 import { FilePond } from "react-filepond";
+import { registerPlugin } from "filepond";
 import { Input } from "./ui/input";
 import { Edit, Plus, X } from "lucide-react";
 import { Button } from "./ui/button";
+import "filepond/dist/filepond.min.css";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 interface FormFieldProps {
   name: string;
   label: string;
