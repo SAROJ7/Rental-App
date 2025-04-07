@@ -11,7 +11,7 @@ export default function RootLayout({ children }: LayoutProps) {
       <AuthenticateProvider>
         <AxiosProvider>
           {children}
-          <Toaster richColors />
+          <Toaster richColors expand={true} closeButton />
         </AxiosProvider>
       </AuthenticateProvider>
     </QueryProvider>
