@@ -21,4 +21,9 @@ export const TAGS = {
   //Lease
   GET_LEASES: "get-leases",
   GET_LEASE_PAYMENT: "get-lease-payment",
+
+  // Applications
+  GET_APPLICATIONS: "get-applicaitons",
+  UPDATE_APPLICATION_STATUS: "update-application-status",
+  CREATE_APPLICATION: "create-application",
 };
