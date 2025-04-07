@@ -7,6 +7,7 @@ import PropertyOverview from "./PropertyOverview";
 import PropertyDetails from "./PropertyDetails";
 import PropertyLocation from "./PropertyLocation";
 import ContactWidget from "./ContactWidget";
+import ApplicationModal from "./ApplicationModal";
 
 const SingleListing = () => {
   const { id } = useParams();
@@ -30,6 +31,13 @@ const SingleListing = () => {
           <ContactWidget onOpenModal={() => setIsModalOpen(true)} />
         </div>
       </div>
+      {authUser?.data && (
+        <ApplicationModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          propertyId={propertyId}
+        />
+      )}
     </div>
   );
 };
