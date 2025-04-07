@@ -1,5 +1,5 @@
 import { SettingsFormData } from "@/lib";
-import { Lease, Payment, Property } from "./prismaTypes";
+import { Application, Lease, Payment, Property } from "./prismaTypes";
 
 export interface LayoutProps
   extends Readonly<{
@@ -58,4 +58,16 @@ export interface PaymentMethodProps {}
 
 export interface BillingHistoryProps {
   payments: Payment[];
+}
+
+export interface ApplicationCardProps {
+  application: Application;
+  userType: "manager" | "renter";
+  children: React.ReactNode;
+}
+
+export interface ApplicationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  propertyId: number;
 }

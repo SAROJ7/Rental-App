@@ -1,11 +1,53 @@
 "use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { useGlobalStore } from "@/store/global.store";
 
 const HeroSection = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const setFilters = useGlobalStore((state) => state.setFilters);
+  const router = useRouter();
+
+  const handleLocationSearch = async () => {
+    try {
+      const trimmedQuery = searchQuery.trim();
+      if (!trimmedQuery) return;
+
+      const response = await fetch(
+        `https://api.radar.io/v1/geocode/forward?query=${encodeURIComponent(
+          trimmedQuery
+        )}&fuzzyMatch=true`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `${process.env.NEXT_PUBLIC_RADAR_API_KEY}`,
+          },
+        }
+      );
+      const data = await response.json();
+      if (data.addresses && data.addresses.length > 0) {
+        const [lng, lat] = data.addresses[0].geometry.coordinates;
+        setFilters({
+          location: trimmedQuery,
+          coordinates: [lat, lng],
+        });
+        const params = new URLSearchParams({
+          location: trimmedQuery,
+          lat: lat.toString(),
+          lng: lng,
+        });
+        router.push(`/search?${params.toString()}`);
+      }
+    } catch (error) {
+      console.error("error search location:", error);
+    }
+  };
+
   return (
     <div className="relative h-screen ">
       <Image
@@ -33,13 +75,15 @@ const HeroSection = () => {
             <div className="flex justify-center">
               <Input
                 type="text"
-                value="search query"
-                onChange={() => {}}
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                }}
                 placeholder="Search by district, nagarpalika or address"
                 className="w-full max-w-lg rounded-none rounded-l-xl border-none bg-white h-12"
               />
               <Button
-                onClick={() => {}}
+                onClick={handleLocationSearch}
                 className="bg-secondary-500 text-white rounded-none rounded-r-xl border-none hover:bg-secondary-600 h-12"
               >
                 Search
